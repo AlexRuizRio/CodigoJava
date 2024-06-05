@@ -4,6 +4,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Coffee Coffee = new Coffee();
+		
 		System.out.println("Mostrar todos los cafés:");
 		Coffee.showCoffee();
 		
@@ -22,6 +23,9 @@ public class Main {
         // Borrar un café
         System.out.println("Borrar un café:");
         Coffee.borrarCafe("NuevoCafe");
+        
+        // Transacción con insert, update y delete
+        Coffee.manejarTransaccion();
         
 		Coffee.close();
 		

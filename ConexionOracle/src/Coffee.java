@@ -12,6 +12,7 @@ public class Coffee
 		try
 		{
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "123456*/*");
+			conn.setAutoCommit(false);
 			st = conn.createStatement();
 			pst = null;
 			rs = null;
@@ -143,6 +144,43 @@ public class Coffee
 	                System.out.println("-----------");
 	            }
 	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	        	clear();
+	        }
+	    }
+	    public void actualizarPrecioCafe(String nombre, double nuevoPrecio) {
+	        String query = "UPDATE sys.COFFEES SET PRICE = ? WHERE COF_NAME = ?";
+	        try {
+	            pst = conn.prepareStatement(query);
+	            pst.setDouble(1, nuevoPrecio);
+	            pst.setString(2, nombre);
+	            pst.executeUpdate();
+	            System.out.println("Precio actualizado para el café: " + nombre);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	        	clear();
+	        }
+	    }
+
+	    public void manejarTransaccion() {
+	        try {
+	            insertarCafe("Natural", 101, 9.99, 100, 200);
+	            actualizarPrecioCafe("Natural", 10.99);
+	            borrarCafe("Natural");
+
+	            conn.commit();
+	            System.out.println("Transacción completada exitosamente.");
+
+	        } catch (SQLException e) {
+	            try {
+
+	                conn.rollback();
+	                System.out.println("Transacción revertida.");
+	            } catch (SQLException ex) {
+	                ex.printStackTrace();
+	            }
 	            e.printStackTrace();
 	        } finally {
 	        	clear();
