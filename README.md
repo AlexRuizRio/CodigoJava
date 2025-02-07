@@ -47,8 +47,7 @@
         <li>Ejemplos de trabajo con XML utilizando las bibliotecas DOM y JAXB en Java.</li>
         <li>Mapeo de objetos Java a XML y viceversa.</li>
     </ul>
-
-    <h3>8. ProductorConsumidor</h3>
+<h3>8. ProductorConsumidor</h3>
 <p>Resuelve el problema del productor-consumidor utilizando hilos en Java.</p>
 <ul>
   <li>Un hilo productor almacena 15 caracteres en un búfer compartido, y un hilo consumidor recoge 15 caracteres de ese búfer.</li>
