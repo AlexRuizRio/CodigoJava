@@ -48,6 +48,22 @@
         <li>Mapeo de objetos Java a XML y viceversa.</li>
     </ul>
 
+    <h3>8. ProductorConsumidor</h3>
+<p>Resuelve el problema del productor-consumidor utilizando hilos en Java.</p>
+<ul>
+  <li>Un hilo productor almacena 15 caracteres en un búfer compartido, y un hilo consumidor recoge 15 caracteres de ese búfer.</li>
+  <li>El tamaño del búfer es de 6 caracteres, por lo que el consumidor sólo puede recoger cuando el búfer no esté vacío y el productor sólo puede insertar cuando haya espacio disponible.</li>
+  <li>El código simula la interacción entre los hilos productor y consumidor, mostrando la salida del programa con los caracteres insertados y consumidos.</li>
+</ul>
+
+<h3>9. Filosofos</h3>
+<p>Resuelve el clásico problema de "La cena de los filósofos" utilizando la clase Semaphore del paquete java.util.concurrent.</p>
+<ul>
+  <li>En este escenario, cinco filósofos se sientan alrededor de una mesa con platos y palillos, y deben seguir un algoritmo que permita que coman sin interferencias.</li>
+  <li>El algoritmo asegura la exclusión mutua (dos filósofos no pueden usar el mismo palillo a la vez) y previene el interbloqueo y la inanición.</li>
+  <li>El código implementa el comportamiento de los filósofos con semáforos y muestra cómo se resuelve el problema.</li>
+</ul>
+
   <h2>Propósito</h2>
     <p>El propósito de este repositorio es mostrar los ejercicios realizados durante la Formación Profesional Superior en Desarrollo de Aplicaciones Multiplataforma. Está diseñado para ayudar a los desarrolladores a comprender diferentes aspectos de la programación en Java, desde la gestión de bases de datos hasta la manipulación de archivos XML y la implementación de conceptos de programación orientada a objetos.</p>
 
