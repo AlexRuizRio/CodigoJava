@@ -17,24 +17,28 @@ public class Elfos implements Runnable{
 	
 	public void run () {
 		int contador = 0;
-		while (contador <= maxjuguetes) {
+		while (contador < maxjuguetes) {
 			try {
 				Jugueteria.semHuecosEstan.acquire();
 				String tipo = tipos[ran.nextInt(tipos.length)];
 				int jugueteid = Jugueteria.getNextId();
 				Juguete Njuguete = new Juguete (jugueteid, tipo);
 				
-				Thread.sleep(1000, ran.nextInt(3000));
 				synchronized (Jugueteria.estanteria) {
+					Thread.sleep(1000, ran.nextInt(3000));
 					Jugueteria.estanteria.add(Njuguete);
+					Jugueteria.semJugueteDis.release();
 					System.out.println("El elfo numero " + id + " deposito en la estanteria una " + Njuguete.getTipo());
+					contador++;
+					System.out.println("ESTANTERÍA ACTUAL: " + Jugueteria.estanteria.size());
 				}
-				Jugueteria.semJugueteDis.release();
+
 			}catch (Exception e) {
+				System.out.println("fallo en niños malos");
 				e.printStackTrace();
 			}
 		}
-		System.out.println("El elfo numero" + id + "creo todos sus juguetes");
+		System.out.println("El elfo numero " + id + " creo TODOS sus juguetes");
 	}
 }
 

@@ -14,24 +14,29 @@ public class NinosBuenos implements Runnable{
 	}
 	
 	public void run() {
-		try {
-			Jugueteria.semJugueteDis.acquire();
-			Juguete juguete;
-			synchronized (Jugueteria.estanteria) {
-				juguete = Jugueteria.estanteria.remove(0);
+		while(true)
+		{
+			try {
+				Jugueteria.semJugueteDis.acquire();
+				Juguete juguete;
+				
+				synchronized (Jugueteria.estanteria) {
+					juguete = Jugueteria.estanteria.remove(0);
+				}
+				Jugueteria.semHuecosEstan.release();
+				System.out.println("El niño bueno " + id + " ha cogido el/la " + juguete.getTipo());
+				
+				Thread.sleep(1000, ran.nextInt(5000));
+				
+				Jugueteria.semHuecosEstan.acquire();
+				synchronized (Jugueteria.estanteria) {
+					Jugueteria.estanteria.add(juguete);
+				}
+				Jugueteria.semJugueteDis.release();
+				System.out.println("El niño bueno " + id + " devolvio el/la " + juguete.getTipo());
+			}catch (Exception e) {
+				e.printStackTrace();
 			}
-			Jugueteria.semHuecosEstan.release();
-			System.out.println("El niño bueno " + id + " ha cogido el/la " + juguete.getTipo());
-			
-			Thread.sleep(1000, ran.nextInt(5000));
-			
-			synchronized (Jugueteria.estanteria) {
-				Jugueteria.estanteria.add(juguete);
-			}
-			
-			System.out.println("El niño bueno " + id + " devolvio el/la " + juguete.getTipo());
-		}catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

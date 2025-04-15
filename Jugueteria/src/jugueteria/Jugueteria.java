@@ -15,12 +15,13 @@ public class Jugueteria {
 	private static int idJuguete = 1;
 	
 	public static synchronized int getNextId() {
-		return idJuguete;
+		return idJuguete++;
 	}
 	public static void main(String[] args) {
-		for( int x = 1; x <= 3; x++)
+		for( int x = 1; x <= 10; x++)
 		{
-			int maxjuguetes = ran.nextInt(10, 20);
+			int maxjuguetes = ran.nextInt(10, 21);
+			System.out.println("El elfo " + x + " va a crear " + maxjuguetes + " juguetes.");
 			new Thread(new Elfos(x, maxjuguetes)).start();;
 		}
 		for (int x = 1; x<= 5; x++)
