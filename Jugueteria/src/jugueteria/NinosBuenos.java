@@ -6,13 +6,11 @@ import java.util.concurrent.Semaphore;
 public class NinosBuenos implements Runnable{
 	
 	private final int id;
-	private final String tipoJuguete;
 	private static final Random ran = new Random();
 	
-	public NinosBuenos (int id, String tipoJuguete)
+	public NinosBuenos (int id)
 	{
 		this.id = id;
-		this.tipoJuguete = tipoJuguete;
 	}
 	
 	public void run() {
@@ -22,8 +20,18 @@ public class NinosBuenos implements Runnable{
 			synchronized (Jugueteria.estanteria) {
 				juguete = Jugueteria.estanteria.remove(0);
 			}
-		}catch (Exception e) {
+			Jugueteria.semHuecosEstan.release();
+			System.out.println("El niño bueno " + id + " ha cogido el/la " + juguete.getTipo());
 			
+			Thread.sleep(1000, ran.nextInt(5000));
+			
+			synchronized (Jugueteria.estanteria) {
+				Jugueteria.estanteria.add(juguete);
+			}
+			
+			System.out.println("El niño bueno " + id + " devolvio el/la " + juguete.getTipo());
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
