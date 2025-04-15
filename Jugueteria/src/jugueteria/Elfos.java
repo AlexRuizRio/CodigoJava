@@ -39,6 +39,7 @@ public class Elfos implements Runnable{
 			}
 		}
 		System.out.println("El elfo numero " + id + " creo TODOS sus juguetes");
+		Jugueteria.latchElfos.countDown();
 	}
 }
 

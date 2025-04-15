@@ -18,6 +18,12 @@ public class NinosBuenos implements Runnable{
 		{
 			try {
 				Jugueteria.semJugueteDis.acquire();
+				if(Jugueteria.latchElfos.getCount() == 0 && Jugueteria.semJugueteDis.availablePermits() == 0)
+				{
+					System.out.println("El niño bueno " + id + " se marcha de la tienda");
+					Jugueteria.semJugueteDis.release();
+					break;
+				}
 				Juguete juguete;
 				
 				synchronized (Jugueteria.estanteria) {

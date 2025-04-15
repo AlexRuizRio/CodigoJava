@@ -7,6 +7,7 @@ public class NinosMalos implements Runnable{
 
 	private final int id;
 	private static final Random ran = new Random();
+	boolean bandera = true;
 	
 	public NinosMalos (int id)
 	{
@@ -19,7 +20,15 @@ public class NinosMalos implements Runnable{
 		while (juguetesrotos < 3)
 		{
 			try {
+				
 			Jugueteria.semJugueteDis.acquire();
+			if(Jugueteria.latchElfos.getCount() == 0 && Jugueteria.semJugueteDis.availablePermits() == 0)
+			{
+				System.out.println("El niño malo " + id + " se marcha de la tienda");
+				Jugueteria.semJugueteDis.release();
+				bandera = false;
+				break;
+			}
 			Juguete juguete;
 			synchronized (Jugueteria.estanteria) {
 				juguete = Jugueteria.estanteria.remove(0);
@@ -34,6 +43,7 @@ public class NinosMalos implements Runnable{
 				e.printStackTrace();
 			}
 		}
-		System.out.println("El niño malo numero " + id +" fue EXPULSADO de la tienda");
+		if(bandera)
+			System.out.println("El niño malo numero " + id +" fue EXPULSADO de la tienda");
 	}
 }
