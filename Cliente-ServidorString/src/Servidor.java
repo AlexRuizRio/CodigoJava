@@ -37,7 +37,6 @@ public class Servidor {
 
 	        String mensaje;
 
-	        //  El servidor sigue escuchando mientras el cliente mande algo
 	        while ((mensaje = entrada.readLine()) != null && !mensaje.isEmpty()) {
 	            System.out.println("El cliente mando:");
 	            System.out.println(mensaje);
@@ -47,10 +46,9 @@ public class Servidor {
 	            System.out.println("Mensaje devuelto:");
 	            System.out.println(modificado);
 
-	            salida.println(modificado); // Responde al cliente
+	            salida.println(modificado);
 	        }
 
-	        //  Cierre de recursos
 	        entrada.close();
 	        salida.close();
 	        clienteSocket.close();
