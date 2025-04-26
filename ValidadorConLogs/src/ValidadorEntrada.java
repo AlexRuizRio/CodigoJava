@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.logging.*;
@@ -28,7 +29,7 @@ public class ValidadorEntrada {
 				//System.out.println(nUser);
 				pat = Pattern.compile("[a-z]{8}");
 				mat = pat.matcher(nUser);
-				if(mat.find()) {
+				if(mat.matches()) {
 					bandera = false;
 					log.log(Level.INFO, "El usuario " + nUser + " entro en la aplicacion");
 				}else {
@@ -37,6 +38,7 @@ public class ValidadorEntrada {
 				}
 			}
 			System.out.println("Bienvenido " + nUser);
+			validarFichero(pat, mat, log, entrada, nUser);
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -46,15 +48,29 @@ public class ValidadorEntrada {
 		boolean bandera = true;
 		try {
 			while(bandera) {
-				System.out.println("Introduzca el nombre del fichero");
+				System.out.println("Introduzca el nombre del fichero que quieras leer");
 				nFichero = entrada.readLine();
-				//System.out.println(nUser);
-				pat = Pattern.compile("[a-z]{8}");
+				pat = Pattern.compile("[a-zA-Z0-9]{1,8}\\.[a-zA-Z0-9]{3}");
 				mat = pat.matcher(nFichero);
-				if(mat.find()) 
-					bandera = false;
-				else
-					System.out.println("El usuario tiene que ser en minusculas y de 8 caracteres");
+				if(mat.matches()) {
+					log.log(Level.INFO, "El " + nUser + " solicito que se mostrase el archivo " + nFichero);
+					try(BufferedReader br = new BufferedReader(new FileReader(nFichero)))
+					{
+						String linea;
+						while ((linea = br.readLine()) != null) {
+							System.out.println(linea);
+						}
+						log.log(Level.INFO, "El " + nUser + " se le mostro todo el fichero");
+						bandera = false;
+					}catch (FileNotFoundException e) {
+						System.out.println("El archivo no existe");
+						log.log(Level.WARNING, "El usuario " + nUser + " intento acceder a un archivo que no existe");
+					}
+
+				} else {
+					System.out.println("El archivo " + nFichero + " no cumple con la validacion");
+					log.log(Level.WARNING, "El usuario " + nUser + "intento acceder al fichero " + nFichero + " y se le denego el acceso");
+				}
 			}
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
