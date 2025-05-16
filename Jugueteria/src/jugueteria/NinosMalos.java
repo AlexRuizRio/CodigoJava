@@ -20,7 +20,6 @@ public class NinosMalos implements Runnable{
 		while (juguetesrotos < 3)
 		{
 			try {
-				
 			Jugueteria.semJugueteDis.acquire();
 			if(Jugueteria.latchElfos.getCount() == 0 && Jugueteria.semJugueteDis.availablePermits() == 0)
 			{
@@ -38,7 +37,7 @@ public class NinosMalos implements Runnable{
 			System.out.println("El niño malo " + id + " rompio el/la " + juguete.getTipo());
 			
 			juguetesrotos++;
-			Jugueteria.semHuecosEstan.release();
+			//Jugueteria.semHuecosEstan.release();
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
